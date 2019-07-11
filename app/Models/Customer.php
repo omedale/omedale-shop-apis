@@ -9,6 +9,7 @@ use Illuminate\Database\Eloquent\Model;
 class Customer extends Authenticatable implements JWTSubject
 {
     protected $table = 'customer';
+    protected $primaryKey = "customer_id";
     protected $fillable = ['name', 'email', 'password'];
     public $timestamps = false;
 
@@ -21,5 +22,14 @@ class Customer extends Authenticatable implements JWTSubject
     public function getJWTCustomClaims()
     {
       return [];
+    }
+
+    public function generateToken($password)
+    {
+        $credentials = [
+            'email' => $this->email,
+            'password' => $password
+        ];
+        return auth()->attempt($credentials);
     }
 }
