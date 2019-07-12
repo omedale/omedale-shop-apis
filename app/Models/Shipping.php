@@ -4,8 +4,9 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 
-class ProductAttribute extends Model
+class Shipping extends Model
 {
-    protected $table = 'product_attribute';
+    protected $table = 'shipping';
+    protected $primaryKey = "shipping_id";
     public $timestamps = false;
 }

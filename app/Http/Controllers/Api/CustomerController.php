@@ -1,9 +1,12 @@
 <?php
 
 namespace App\Http\Controllers\Api;
+
 use Validator;
+
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+
 use App\Models\Customer;
 use App\Helpers\ErrorHelper;
 
@@ -17,6 +20,7 @@ class CustomerController extends Controller
             'email' => 'required|email',
             'password' => 'required',
         ];
+
         $messages = [
             'email.required' => 'Email is required',
             'email.email' => 'Invalid email',
@@ -35,6 +39,7 @@ class CustomerController extends Controller
                 'email' => $request->email,
                 'password' => bcrypt($request->password),
             ]);
+
             $token = auth()->login($customer);
             return $this->respondWithToken($token, $customer, 201);
         } else {
@@ -49,19 +54,23 @@ class CustomerController extends Controller
             'email' => 'required|email',
             'password' => 'required',
         ];
+
         $messages = [
             'email.required' => 'Email is required',
             'email.email' => 'Invalid email',
             'password.required' => 'Password is required',
         ];
+
         $validator = Validator:: make($get_input, $rules, $messages);
         if($validator->fails()) {
             return ErrorHelper::USR_02($validator->errors());
         }
+
         $credentials = $request->only(['email', 'password']);
         if (!$token = auth()->attempt($credentials)) {
             return ErrorHelper::USR_01();
         }
+
         return $this->respondWithToken($token, auth()->user(), 200);
     }
 
@@ -76,7 +85,8 @@ class CustomerController extends Controller
             'country' => 'required',
             'shipping_region_id' => 'required',
         ];
-         $messages = [
+
+        $messages = [
             'address_1.required' => 'Address 1 is required',
             'city.required' => 'City is required',
             'region.required' => 'Region is required',
@@ -99,14 +109,12 @@ class CustomerController extends Controller
         $customer->country = $request->country ? $request->country : $customer->country;
         $customer->shipping_region_id = $request->shipping_region_id ? $request->shipping_region_id : $customer->shipping_region_id;
         $customer->save();
-
-
         return response()->json(
-        $this->customerSchema($customer)['schema']
-        )
-        ->setStatusCode(200);
-    }
+            $this->customerSchema($customer)['schema']
+            )
+            ->setStatusCode(200);
 
+    }
 
     protected function respondWithToken($token, $customer, $status)
     {

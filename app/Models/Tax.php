@@ -4,8 +4,9 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 
-class ProductAttribute extends Model
+class Tax extends Model
 {
-    protected $table = 'product_attribute';
+    protected $table = 'tax';
+    protected $primaryKey = "tax_id";
     public $timestamps = false;
 }

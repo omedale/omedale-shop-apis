@@ -1,5 +1,6 @@
 <?php
 namespace App\Helpers;
+
 class ErrorHelper {
     public static function  USR_04() {
         return response()->json([
@@ -12,6 +13,7 @@ class ErrorHelper {
         ])
         ->setStatusCode(400);
     }
+
     public static function USR_02($errors) {
         return response()->json([
             'error' => [
@@ -68,7 +70,8 @@ class ErrorHelper {
         ])
         ->setStatusCode(401);
     }
-     public static function USR_01() {
+
+    public static function USR_01() {
         return response()->json([
             'error' => [
                 'status' => 400,
@@ -78,5 +81,4 @@ class ErrorHelper {
         ])
         ->setStatusCode(400);
     }
-
 }
