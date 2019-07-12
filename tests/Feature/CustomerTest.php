@@ -1,13 +1,14 @@
 <?php
 
 namespace Tests\Feature;
+
 use App\Models\Customer;
+
 use Tests\TestCase;
 use Illuminate\Foundation\Testing\WithFaker;
 use Illuminate\Foundation\Testing\RefreshDatabase;
-use App\Helpers\ErrorHelper;
 
- class CustomerTest extends TestCase
+class CustomerTest extends TestCase
 {
     public $auth_payload = ['name' => 'Oluwafemi', 'email' => 'omedal@customer.com', 'password' => 'test'];
 
@@ -54,6 +55,7 @@ use App\Helpers\ErrorHelper;
             ]);
     }
 
+
     public function test_email_and_password_required_to_login()
     {
         $this->json('POST', 'api/customer/login')
@@ -71,7 +73,8 @@ use App\Helpers\ErrorHelper;
             ]);
     }
 
-     public function test_successfull_login() {
+
+    public function test_successfull_login() {
         $this->json('POST', 'api/customer/login', $this->auth_payload)
             ->assertStatus(200)
             ->assertJsonStructure([
@@ -93,9 +96,8 @@ use App\Helpers\ErrorHelper;
                 ],
                 'expires_in' => '24h',
             ]);
-            $this->clear_db();
+            $this->clear_customer_table();
     }
-
 
     public function test_unsuccessfull_customer_address_update() {
         $customer = factory(Customer::class)->create();
@@ -148,7 +150,7 @@ use App\Helpers\ErrorHelper;
             ]);
     }
 
-     private function clear_db() {
+    private function clear_customer_table() {
         Customer::truncate();
     }
 }
