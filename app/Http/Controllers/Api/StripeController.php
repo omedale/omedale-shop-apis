@@ -50,7 +50,8 @@ class StripeController extends Controller
         $orderDetails = OrderDetail::where('order_id', $request->order_id)->get();
         $customer = Customer::find($request->jwt_customer_id);
         $order  = Order::find($request->order_id);
-        $shipping_price = Shipping::find($order->shipping_id)->value('shipping_cost');
+        $shipping = Shipping::find($order->shipping_id);
+        $shipping_price = $shipping->shipping_cost;
         $tax_percentage = Tax::find($order->tax_id)->value('tax_percentage');
         $tax_rate = ((float)$tax_percentage /100);
         $order_amounts = $orderDetails->map(function ($order) {
