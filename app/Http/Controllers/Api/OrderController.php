@@ -74,7 +74,6 @@ class OrderController extends Controller
 
         $items_total = collect($items_amounts)->sum();
         $tax_percentage = Tax::find($request->tax_id)->value('tax_percentage');
-        $shipping_cost = Shipping::find($request->shipping_id)->value('shipping_cost');
         $shipping = Shipping::find($request->shipping_id);
         $amount = $items_total + ($items_total * ((float)$tax_percentage/100)) + $shipping->shipping_cost;
         $total_amount = number_format(collect($amount)->sum(), 2, '.', '');
