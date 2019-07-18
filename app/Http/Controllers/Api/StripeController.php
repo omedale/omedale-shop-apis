@@ -10,6 +10,7 @@ use App\Models\OrderDetail;
 use App\Models\Customer;
 use App\Models\Order;
 use App\Models\Tax;
+use Stripe;
 use App\Mail\OrderReceipt;
 use Illuminate\Support\Facades\Mail;
 use App\Models\Shipping;
@@ -58,7 +59,7 @@ class StripeController extends Controller
         $order_total_amount = collect($order_amounts)->sum();
         $tax_price = ($order_total_amount * $tax_rate);
         $amount = $order_total_amount + $tax_price + (float)$shipping_price;
-    
+
         $data = [
             'orderDetails' => $orderDetails,
             'customer' => $customer,
