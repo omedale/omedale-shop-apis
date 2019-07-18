@@ -7,7 +7,6 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 
 use App\Models\Product;
-use App\Models\Customer;
 use App\Models\ShoppingCart;
 use App\Helpers\ErrorHelper;
 use App\Helpers\CommonHelper;
@@ -38,7 +37,7 @@ class ShoppingCartController extends Controller
             return ErrorHelper::NOT_FOUND('Product');
         };
 
-        $attributes = INPUT::get('attributes');
+        $attributes = Input::get('attributes');
         $item = new ShoppingCart;
         $item->product_id = $request->product_id;
         $item->cart_id = $request->cart_id;
@@ -54,7 +53,7 @@ class ShoppingCartController extends Controller
     }
 
     public function update(Request $request, $item_id) {
-        $get_input = INPUT::all();
+        $get_input = Input::all();
         $rules = [
             'quantity' => 'required',
         ];

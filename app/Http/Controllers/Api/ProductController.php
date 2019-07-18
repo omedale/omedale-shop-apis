@@ -4,7 +4,7 @@ namespace App\Http\Controllers\Api;
 
 use Validator;
 use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Facades\INPUT;
+use Illuminate\Support\Facades\Input;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Product;
