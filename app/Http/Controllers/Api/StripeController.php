@@ -10,6 +10,7 @@ use App\Models\OrderDetail;
 use App\Models\Customer;
 use App\Models\Order;
 use App\Models\Tax;
+use Stripe;
 use App\Mail\OrderReceipt;
 use Illuminate\Support\Facades\Mail;
 use App\Models\Shipping;
@@ -49,7 +50,8 @@ class StripeController extends Controller
         $orderDetails = OrderDetail::where('order_id', $request->order_id)->get();
         $customer = Customer::find($request->jwt_customer_id);
         $order  = Order::find($request->order_id);
-        $shipping_price = Shipping::find($order->shipping_id)->value('shipping_cost');
+        $shipping = Shipping::find($order->shipping_id);
+        $shipping_price = $shipping->shipping_cost;
         $tax_percentage = Tax::find($order->tax_id)->value('tax_percentage');
         $tax_rate = ((float)$tax_percentage /100);
         $order_amounts = $orderDetails->map(function ($order) {
@@ -58,7 +60,7 @@ class StripeController extends Controller
         $order_total_amount = collect($order_amounts)->sum();
         $tax_price = ($order_total_amount * $tax_rate);
         $amount = $order_total_amount + $tax_price + (float)$shipping_price;
-    
+
         $data = [
             'orderDetails' => $orderDetails,
             'customer' => $customer,
