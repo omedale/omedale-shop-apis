@@ -55,14 +55,14 @@ class Handler extends ExceptionHandler
                 ]
             )->setStatusCode(404);
         }
-         if ($request->is('api/*')) {
-            DB::rollback();
-            return response()->json(
-                [
-                    'message' =>  'Sorry, an error occurred',
-                ]
-            );
-        }
+        //  if ($request->is('api/*')) {
+        //     DB::rollback();
+        //     return response()->json(
+        //         [
+        //             'message' =>  'Sorry, an error occurred',
+        //         ]
+        //     );
+        // }
         return parent::render($request, $exception);
     }
 }
