@@ -32,13 +32,14 @@ $ cp .env.example .env.testing
 ```
 $ mysql -u root
 
-> create database turing_dev
-> create database turing_test
+> create database dev
+> create database test
 > exit
 
 $ cd database/db
-$ mysql -u root turing_dev  < tshirtshop.sql
-$ mysql -u root turing_test  < tshirtshop.sql
+$ mysql -u root dev  < shop.sql
+$ mysql -u root test  < shop.sql
+
 
 
 $ php artisan migrate
